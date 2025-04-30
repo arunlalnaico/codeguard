@@ -3,7 +3,7 @@
   "name": "CodeGuard AI Sample Ruleset",
   "description": "Sample security and compliance rules for a team project",
   "rules": {
-    "SEC001": { 
+    "SEC001": {   
       "enabled": true, 
       "severity": "critical",
       "options": {

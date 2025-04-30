@@ -338,6 +338,23 @@ export function activate(context: vscode.ExtensionContext) {
         checkForRulesetUpdates();
     }
 
+    context.subscriptions.push(
+        vscode.window.registerWebviewPanelSerializer('codeguard-ai.dashboard', {
+            async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
+                webviewPanel.webview.onDidReceiveMessage(async (message) => {
+                    if (message.command === 'openFile') {
+                        const { file, line, character } = message;
+                        const document = await vscode.workspace.openTextDocument(file);
+                        const editor = await vscode.window.showTextDocument(document);
+                        const position = new vscode.Position(line, character);
+                        editor.selection = new vscode.Selection(position, position);
+                        editor.revealRange(new vscode.Range(position, position), vscode.TextEditorRevealType.InCenter);
+                    }
+                });
+            }
+        })
+    );
+
     console.log('CodeGuard AI extension activated');
 }
 
