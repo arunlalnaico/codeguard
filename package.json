@@ -1,0 +1,204 @@
+{
+  "name": "codeguard-ai",
+  "displayName": "CodeGuard AI",
+  "description": "Instant AI-driven security and compliance audits for teams and SaaS companies",
+  "version": "0.0.1",
+  "publisher": "arunlal",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/codeguard_ai.git"
+  },
+  "categories": [
+    "Other",
+    "Linters",
+    "Security"
+  ],
+  "keywords": [
+    "security",
+    "compliance",
+    "audit",
+    "vulnerability",
+    "GDPR",
+    "HIPAA",
+    "SOC2"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codeguard-ai.scanCurrentFile",
+        "title": "CodeGuard AI: Scan Current File"
+      },
+      {
+        "command": "codeguard-ai.createDefaultConfig",
+        "title": "CodeGuard AI: Create Default Configuration"
+      },
+      {
+        "command": "codeguard-ai.showConfig",
+        "title": "CodeGuard AI: Show Current Configuration"
+      },
+      {
+        "command": "codeguard-ai.showDashboard",
+        "title": "CodeGuard AI: Show Dashboard"
+      },
+      {
+        "command": "codeguard-ai.scanWorkspace",
+        "title": "CodeGuard AI: Scan Workspace"
+      },
+      {
+        "command": "codeguard-ai.updateSecurityRuleset",
+        "title": "CodeGuard AI: Update Security Ruleset"
+      },
+      {
+        "command": "codeguard-ai.setRulesetUrl",
+        "title": "CodeGuard AI: Set Ruleset Download URL"
+      }
+    ],
+    "configuration": {
+      "title": "CodeGuard AI",
+      "properties": {
+        "codeguardai.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable the CodeGuard AI extension"
+        },
+        "codeguardai.securityRules": {
+          "type": "object",
+          "default": {
+            "SEC001": true,
+            "SEC002": true,
+            "SEC003": true,
+            "SEC004": true,
+            "SEC005": true
+          },
+          "description": "Configure which security rules to check"
+        },
+        "codeguardai.complianceProfiles": {
+          "type": "object",
+          "default": {
+            "gdpr": true,
+            "hipaa": true,
+            "soc2": true,
+            "pci-dss": true,
+            "iso27001": true
+          },
+          "description": "Select which compliance profiles to enforce"
+        },
+        "codeguardai.teamMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable/disable team collaboration features"
+        },
+        "codeguardai.scanOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically scan files when saved"
+        },
+        "codeguardai.scanOnOpen": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically scan files when opened"
+        },
+        "codeguardai.scanOnChange": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically scan files when changed (may impact performance)"
+        },
+        "codeguardai.rulesetUrl": {
+          "type": "string",
+          "default": "https://api.codeguard-ai.com/rulesets/security/latest",
+          "description": "URL for downloading security ruleset definitions"
+        },
+        "codeguardai.includeExperimentalRules": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include experimental security rules in ruleset updates"
+        },
+        "codeguardai.autoUpdateRulesets": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically check for ruleset updates when the extension is activated"
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codeguardai",
+          "title": "CodeGuard AI",
+          "icon": "$(shield)"
+        }
+      ]
+    },
+    "views": {
+      "codeguardai": [
+        {
+          "id": "codeguardai.securityView",
+          "name": "Security Issues"
+        },
+        {
+          "id": "codeguardai.complianceView",
+          "name": "Compliance Issues"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "codeguard-ai.scanCurrentFile",
+          "when": "editorTextFocus",
+          "group": "navigation"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "codeguard-ai.showDashboard",
+          "when": "view == codeguardai.securityView || view == codeguardai.complianceView",
+          "group": "navigation"
+        },
+        {
+          "command": "codeguard-ai.scanWorkspace",
+          "when": "view == codeguardai.securityView || view == codeguardai.complianceView",
+          "group": "navigation"
+        },
+        {
+          "command": "codeguard-ai.updateSecurityRuleset",
+          "when": "view == codeguardai.securityView",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "cross-env NODE_ENV=development webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.99.0",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.23.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.2",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
+  }
+}

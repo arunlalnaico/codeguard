@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "name": "CodeGuard AI Sample Ruleset",
+  "description": "Sample security and compliance rules for a team project",
+  "rules": {
+    "SEC001": { 
+      "enabled": true, 
+      "severity": "critical",
+      "options": {
+        "ignoreTestFiles": true
+      }
+    },
+    "SEC002": { 
+      "enabled": true, 
+      "severity": "critical" 
+    },
+    "SEC003": { 
+      "enabled": true, 
+      "severity": "high" 
+    },
+    "SEC004": { 
+      "enabled": true, 
+      "severity": "high" 
+    },
+    "SEC005": { 
+      "enabled": true, 
+      "severity": "high" 
+    },
+    "COMP001": { 
+      "enabled": true, 
+      "severity": "high" 
+    },
+    "COMP002": { 
+      "enabled": true, 
+      "severity": "medium" 
+    },
+    "COMP003": { 
+      "enabled": true, 
+      "severity": "medium" 
+    },
+    "COMP004": { 
+      "enabled": true, 
+      "severity": "high" 
+    },
+    "COMP005": { 
+      "enabled": true, 
+      "severity": "critical" 
+    }
+  },
+  "complianceProfiles": {
+    "gdpr": { 
+      "enabled": true, 
+      "standards": ["gdpr"] 
+    },
+    "hipaa": { 
+      "enabled": false, 
+      "standards": ["hipaa"] 
+    },
+    "soc2": { 
+      "enabled": true, 
+      "standards": ["soc2"] 
+    },
+    "pci-dss": { 
+      "enabled": false, 
+      "standards": ["pci-dss"] 
+    },
+    "iso27001": { 
+      "enabled": true, 
+      "standards": ["iso27001"] 
+    }
+  }
+}
